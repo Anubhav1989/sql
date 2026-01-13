@@ -30,3 +30,42 @@ create table test15(name char(10));
 insert into test15 values('abc'),('deffghi');
 insert into test15 values('asdfghjklpo');-- error
 select * from test15;
+
+create table test16(name varchar(20),gender char(10));
+insert into test16 values('xp','male'),('ts','female'),('ac','male');
+insert into test16 values('raj        ','male        ');
+select *,length(name),length(gender) from test16;
+
+-- ddl->data definition language
+-- create,drop,alter,truncate
+create table raj123(col int);
+
+-- create a table using select(CTAS)
+create table actor_cp as
+select first_name,last_name from sakila.actor;
+
+select * from actor_cp;
+
+-- drop--
+drop table actor_cp;
+
+create table actor_cp as
+select first_name as fname,last_name as lname from sakila.actor
+where actor_id between 10 and 14;
+select * from actor_cp;
+
+-- alter
+alter table actor_cp add column (salary int);
+
+alter table actor_cp add constraint new_key primary key(fname);
+alter table actor_cp drop column lname;
+alter table actor_cp rename column salary to newsalary; 
+desc actor_cp;
+
+-- dml-> data manipulation language
+-- insert,update set col=values
+
+update actor_cp set newsalary=900;
+
+update actor_cp set newsalary=888 where fname='UMA';
+select * from actor_cp;
